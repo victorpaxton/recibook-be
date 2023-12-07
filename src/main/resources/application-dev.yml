@@ -13,4 +13,4 @@ spring:
       minimum-idle: 3 # This means that HikariCP will maintain a minimum of 3 idle connections in the pool at all times
 
 app:
-  swaggerUrl: https://recibook-production.up.railway.app
+  swaggerUrl: https://recibook-be-production.up.railway.app
