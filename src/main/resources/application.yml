@@ -1,0 +1,47 @@
+server:
+  port: ${PORT:8085}
+  servlet:
+    context-path: /recibook-service
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,application/javascript,application/json
+
+spring:
+  application:
+    name: recibook
+    security:
+      jwt:
+        secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+        expiration: 86400000 # 30 seconds
+        refresh-token:
+          expiration: 2419200000 # 1 minute
+        reset-token:
+          expiration: 900000 # 1 minute
+
+  web:
+    resources:
+      static-locations: file:/home
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: t10tqh@gmail.com
+    password: pyomoafrtlybjlmg
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+      hibernate: ERROR
