@@ -12,7 +12,5 @@ public class RecipeCreateDTO {
 
     private int cookingTime;
 
-    private String image;
-
     private String cuisine;
 }
