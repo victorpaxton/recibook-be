@@ -55,7 +55,13 @@ public class RecipeService implements IRecipeService {
 
     @Override
     public Recipe addRecipe(RecipeCreateDTO recipeCreateDTO) {
-        Recipe newRecipe = modelMapper.map(recipeCreateDTO, Recipe.class);
+        Recipe newRecipe = Recipe.builder()
+                .recipeName(recipeCreateDTO.getRecipeName())
+                .description(recipeCreateDTO.getDescription())
+                .direction(recipeCreateDTO.getDirection())
+                .cookingTime(recipeCreateDTO.getCookingTime())
+                .cuisine(recipeCreateDTO.getCuisine())
+                .build();
 
         return recipeRepository.save(newRecipe);
     }
