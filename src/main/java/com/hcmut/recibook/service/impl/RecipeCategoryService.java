@@ -58,6 +58,7 @@ public class RecipeCategoryService implements IRecipeCategoryService {
     public Recipe addByCategory(UUID categoryId, RecipeCreateDTO recipeCreateDTO) {
 
         Recipe newRecipe = modelMapper.map(recipeCreateDTO, Recipe.class);
+        newRecipe.setRecipeCategory(recipeCategoryRepository.findById(categoryId).orElseThrow());
 
         return recipeRepository.save(newRecipe);
     }
