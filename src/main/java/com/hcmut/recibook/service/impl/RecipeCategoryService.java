@@ -57,12 +57,7 @@ public class RecipeCategoryService implements IRecipeCategoryService {
     @Override
     public Recipe addByCategory(UUID categoryId, RecipeCreateDTO recipeCreateDTO) {
 
-        Recipe newRecipe = Recipe.builder()
-                .recipeName(recipeCreateDTO.getRecipeName())
-                .description(recipeCreateDTO.getDescription())
-                .cookingTime(recipeCreateDTO.getCookingTime())
-                .recipeCategory(recipeCategoryRepository.findById(categoryId).orElseThrow())
-                .build();
+        Recipe newRecipe = modelMapper.map(recipeCreateDTO, Recipe.class);
 
         return recipeRepository.save(newRecipe);
     }
