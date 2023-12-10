@@ -25,10 +25,15 @@ public class Recipe extends BaseEntity {
     @Column(columnDefinition = "text")
     private String description;
 
+    @Column(columnDefinition = "text")
+    private String direction;
+
     @Column(name = "cooking_time")
     private int cookingTime;
 
     private String image;
+
+    private String cuisine;
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")

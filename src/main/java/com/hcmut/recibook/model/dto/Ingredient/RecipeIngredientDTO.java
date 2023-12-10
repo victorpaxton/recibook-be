@@ -13,5 +13,6 @@ public class RecipeIngredientDTO {
     public static class IngredientInRecipe {
         UUID ingredientId;
         int amount;
+        String unit;
     }
 }

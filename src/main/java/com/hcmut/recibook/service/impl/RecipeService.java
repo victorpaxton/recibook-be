@@ -1,7 +1,6 @@
 package com.hcmut.recibook.service.impl;
 
 import com.hcmut.recibook.file.CloudinaryService;
-import com.hcmut.recibook.file.FilesStorageService;
 import com.hcmut.recibook.model.dto.Ingredient.RecipeIngredientDTO;
 import com.hcmut.recibook.model.dto.Recipe.RecipeBasicDTO;
 import com.hcmut.recibook.model.dto.Recipe.RecipeCreateDTO;
@@ -56,10 +55,7 @@ public class RecipeService implements IRecipeService {
 
     @Override
     public Recipe addRecipe(RecipeCreateDTO recipeCreateDTO) {
-        Recipe newRecipe = Recipe.builder()
-                .recipeName(recipeCreateDTO.getRecipeName())
-                .description(recipeCreateDTO.getDescription())
-                .build();
+        Recipe newRecipe = modelMapper.map(recipeCreateDTO, Recipe.class);
 
         return recipeRepository.save(newRecipe);
     }
@@ -72,6 +68,8 @@ public class RecipeService implements IRecipeService {
         recipe.setRecipeName(recipeCreateDTO.getRecipeName());
         recipe.setDescription(recipeCreateDTO.getDescription());
         recipe.setCookingTime(recipeCreateDTO.getCookingTime());
+        recipe.setDirection(recipeCreateDTO.getDirection());
+        recipe.setCuisine(recipeCreateDTO.getCuisine());
 
         return recipeRepository.save(recipe);
     }
@@ -101,6 +99,7 @@ public class RecipeService implements IRecipeService {
                             .recipe(recipe)
                             .ingredient(ingredientRepository.findById(ingredient.getIngredientId()).orElseThrow())
                             .amount(ingredient.getAmount())
+                             .unit(ingredient.getUnit())
                             .build())
                 );
 

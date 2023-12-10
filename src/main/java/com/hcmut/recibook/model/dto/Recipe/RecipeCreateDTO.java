@@ -8,5 +8,11 @@ public class RecipeCreateDTO {
 
     private String description;
 
+    private String direction;
+
     private int cookingTime;
+
+    private String image;
+
+    private String cuisine;
 }
