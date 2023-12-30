@@ -2,10 +2,7 @@ package com.hcmut.recibook.service.impl;
 
 import com.hcmut.recibook.exception.BadRequestException;
 import com.hcmut.recibook.model.TokenType;
-import com.hcmut.recibook.model.dto.Auth.AuthenticationResponseDTO;
-import com.hcmut.recibook.model.dto.Auth.LoginDTO;
-import com.hcmut.recibook.model.dto.Auth.RefreshTokenRequest;
-import com.hcmut.recibook.model.dto.Auth.TokenDTO;
+import com.hcmut.recibook.model.dto.Auth.*;
 import com.hcmut.recibook.model.dto.User.UserProfileDTO;
 import com.hcmut.recibook.model.entity.Auth.OTPCode;
 import com.hcmut.recibook.model.entity.Auth.Token;
@@ -129,7 +126,7 @@ public class AuthService implements IAuthService {
                 .lastName("")
                 .password(encodedPassword)
                 .phone("")
-                .avatar("/user/avatar/default.jpg")
+                .avatar("https://res.cloudinary.com/dwajaledd/image/upload/v1703950139/user/avatar/wj8krykswzbr6bjbsaih.jpg")
                 .bioIntro("Write something about you!")
                 .roles("ROLE_USER")
                 .isEnabled(true)
@@ -256,6 +253,38 @@ public class AuthService implements IAuthService {
 
         tokenRepository.delete(refreshToken);
         SecurityContextHolder.clearContext();
+    }
+
+    @Override
+    public AuthenticationResponseDTO registerV2(RegisterV2 registerV2) {
+        String encodedPassword = passwordEncoder.encode(registerV2.getPassword());
+
+        User newUser = userRepository.save(
+                User.builder()
+                        .email(registerV2.getEmail())
+                        .firstName("")
+                        .lastName("")
+                        .password(encodedPassword)
+                        .phone("")
+                        .avatar("https://res.cloudinary.com/dwajaledd/image/upload/v1703950139/user/avatar/wj8krykswzbr6bjbsaih.jpg")
+                        .bioIntro("Write something about you!")
+                        .roles("ROLE_USER")
+                        .isEnabled(true)
+                        .build()
+        );
+
+        String refreshToken = jwtService.generateRefreshTokenByUser(newUser);
+        String accessToken = jwtService.generateTokenByUser(newUser);
+
+        tokenService.addToken(refreshToken, TokenType.REFRESH, newUser);
+
+        return AuthenticationResponseDTO.builder()
+                .user(modelMapper.map(newUser, UserProfileDTO.class))
+                .tokens(AuthenticationResponseDTO.TokenResponse.builder()
+                        .access(new TokenDTO(accessToken, jwtService.extractExpiration(accessToken)))
+                        .refresh(new TokenDTO(refreshToken, jwtService.extractExpiration(refreshToken)))
+                        .build())
+                .build();
     }
 
 }

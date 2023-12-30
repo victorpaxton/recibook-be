@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -17,6 +18,11 @@ public interface IngredientRepository extends JpaRepository<Ingredient, UUID> {
             "WHERE CONCAT(ing.ingredient_name, ' ', ing.description, ' ', ing.image) " +
             "LIKE %:keyword%", nativeQuery = true)
     Page<Ingredient> findPageIngredients(@Param("keyword") String keyword, Pageable pageable);
+
+    @Query(value = "SELECT * FROM ingredient AS ing " +
+            "WHERE CONCAT(ing.ingredient_name, ' ', ing.description, ' ', ing.image) " +
+            "LIKE %:keyword%", nativeQuery = true)
+    List<Ingredient> findByKeyword(@Param("keyword") String keyword);
 
     @Query(value = "select * from ingredient where category_id = :categoryId",
             countQuery = "select count(*) from ingredient where category_id = :categoryId",

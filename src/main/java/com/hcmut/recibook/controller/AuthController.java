@@ -1,9 +1,6 @@
 package com.hcmut.recibook.controller;
 
-import com.hcmut.recibook.model.dto.Auth.EmailDTO;
-import com.hcmut.recibook.model.dto.Auth.LoginDTO;
-import com.hcmut.recibook.model.dto.Auth.OTPVerificationDTO;
-import com.hcmut.recibook.model.dto.Auth.RefreshTokenRequest;
+import com.hcmut.recibook.model.dto.Auth.*;
 import com.hcmut.recibook.model.dto.Response.ResponseModel;
 import com.hcmut.recibook.service.IAuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -119,6 +116,17 @@ public class AuthController {
         return ResponseModel.builder()
                 .isSuccess(true)
                 .data("Log out successfully")
+                .errors(null)
+                .build();
+    }
+
+    @PostMapping("/register-v2")
+    @Operation(summary = "Register account with username, email and password")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseModel<Object> registerv2(@RequestBody @Valid RegisterV2 registerV2) {
+        return ResponseModel.builder()
+                .isSuccess(true)
+                .data(authService.registerV2(registerV2))
                 .errors(null)
                 .build();
     }
