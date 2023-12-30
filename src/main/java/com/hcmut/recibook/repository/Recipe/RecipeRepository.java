@@ -16,7 +16,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, UUID> {
 
     @Query(value = "SELECT * FROM recipe AS rec " +
             "WHERE CONCAT(rec.recipe_name, ' ', rec.description, ' ', rec.image) " +
-            "LIKE %:keyword%", nativeQuery = true)
+            "ILIKE %:keyword%", nativeQuery = true)
     Page<Recipe> findPageRecipes(@Param("keyword") String keyword, Pageable pageable);
 
     @Query(value = "select * from recipe where category_id = :categoryId",
