@@ -28,6 +28,12 @@ public class RecipeCategory extends BaseEntity {
     @Column(columnDefinition = "text")
     private String description;
 
+    @Column(columnDefinition = "text")
+    private String svg;
+
+    @Column(name = "svg_active", columnDefinition = "text")
+    private String svgActive;
+
     @OneToMany(mappedBy = "recipeCategory")
     @JsonIgnore
     private List<Recipe> recipes;
