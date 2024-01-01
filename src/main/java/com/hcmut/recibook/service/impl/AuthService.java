@@ -263,7 +263,7 @@ public class AuthService implements IAuthService {
                 User.builder()
                         .email(registerV2.getEmail())
                         .firstName("")
-                        .lastName("")
+                        .lastName(registerV2.getName())
                         .password(encodedPassword)
                         .phone("")
                         .avatar("https://res.cloudinary.com/dwajaledd/image/upload/v1703950139/user/avatar/wj8krykswzbr6bjbsaih.jpg")
