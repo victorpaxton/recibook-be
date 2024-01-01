@@ -43,6 +43,7 @@ public class WebSecurityConfig {
                                         "/auth/otp/generate",
                                         "/auth/otp/verification",
                                         "/auth/register",
+                                        "/auth/register-v2",
                                         "/auth/login",
                                         "/auth/forgot-password",
                                         "/auth/reset-password",
