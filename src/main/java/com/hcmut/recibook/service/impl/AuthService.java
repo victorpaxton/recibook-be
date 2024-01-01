@@ -257,6 +257,9 @@ public class AuthService implements IAuthService {
 
     @Override
     public AuthenticationResponseDTO registerV2(RegisterV2 registerV2) {
+        if (userRepository.existsByEmail(registerV2.getEmail()))
+            throw new BadRequestException("Email already in use");
+
         String encodedPassword = passwordEncoder.encode(registerV2.getPassword());
 
         User newUser = userRepository.save(
